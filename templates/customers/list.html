@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+
+{% block body %}
+
+{% for customer in customers %}
+    <p>{{customer.first_name}}</p>
+
+{% endfor %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p }}
+    <button type="Submit">Add</button>
+</form>
+
+{% endblock body %}
