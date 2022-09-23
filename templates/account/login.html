@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block body %}
+
+<img src="{% static 'AllUP_Logo_Tagline_Color.png' %}" width="200px">
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Log In</button>
+
+</form>
+
+{% endblock body %}
