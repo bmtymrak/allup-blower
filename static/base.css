@@ -62,3 +62,43 @@ a {
     /* text-decoration: none; */
     color: black;
 }
+
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.login--card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+.form-field>input {
+    border-radius: 3px;
+    border: 1px solid rgba(49, 52, 66, 1);
+    height: 35px;
+}
+
+.button-login {
+    background-color: rgba(49, 52, 66, 1);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    height: 30px;
+}

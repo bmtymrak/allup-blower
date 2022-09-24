@@ -2,13 +2,27 @@
 {% load static %}
 {% block body %}
 
-<img src="{% static 'images/AllUP_Logo_Tagline_Color.png' %}" width="200px">
+<main class="main-container">
+    <div class="login--card">
+        <img src="{% static 'images/AllUP_Logo_Tagline_Color_100x500.png' %}" width="500px">
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log In</button>
+        <form class="form-login" method="POST">
+            {% csrf_token %}
+            {{form.non_field_errors}}
 
-</form>
+            <div class="form-field">
+                {{form.login.errors}}
+                {{form.login}}
+            </div>
+
+            <div class="form-field">
+                {{form.password.errors}}
+                {{form.password}}
+            </div>
+
+            <button class="button-login" type="submit">Log In</button>
+        </form>
+    </div>
+</main>
 
 {% endblock body %}
