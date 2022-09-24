@@ -59,7 +59,7 @@ h6 {
 }
 
 a {
-    /* text-decoration: none; */
+    text-decoration: none;
     color: black;
 }
 
@@ -68,6 +68,31 @@ a {
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+.header-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+
+.header-logo {
+    margin-left: 15px;
+}
+
+.header-nav-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-right: 15px;
+}
+
+.header-nav-links>a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 .login--card {
