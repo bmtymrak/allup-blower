@@ -76,6 +76,7 @@ a {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid black;
+    margin-bottom: 50px;
 }
 
 .header-logo {
@@ -126,4 +127,43 @@ a {
     border: none;
     color: white;
     height: 30px;
+}
+
+.customer-list-grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 1fr 2fr 2fr 2fr;
+}
+
+.customer-detail {
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
+}
+
+.customer-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-left: 50px;
+}
+
+.customer-title-address {
+    font-size: 3rem;
+    /* margin-right: 20px; */
+}
+
+.customer-title-name {
+    font-weight: 400;
+}
+
+.customer-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.customer-info-details {
+    display: flex;
+    flex-direction: column;
 }

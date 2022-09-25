@@ -1,12 +1,32 @@
 {% extends "_base.html" %}
 
 {% block body %}
+<main class="customer-detail">
+    <div class="customer-title-container">
+        <h1 class="customer-title-address">{{customer.address}}</h1>
+        <h2 class="customer-title-name">{{customer.first_name}} {{customer.last_name}}</h2>
+    </div>
 
-<p>{{customer.first_name}}</p>
-<p>{{customer.last_name}}</p>
-<p>{{customer.address}}</p>
-<p>{{customer.zip_code}}</p>
-<p>{{customer.blowing_direction}}</p>
-<p>{{customer.notes}}</p>
+    <div class="customer-info-container">
+        <div class="customer-info-image">IMAGE HERE</div>
+        <div class="customer-info-details">
+            <div class="customer-info-notes">
+                <h3>Notes</h3>
+                {{customer.notes|linebreaks}}
+            </div>
+            <div class="customer-info-hazards">
+                <h3>Hazards</h3>
+                <div class="">Hazard 1</div>
+                <div class="">Hazard 2</div>
+                <div class="">Hazard 3</div>
+            </div>
+            <div class="customer-info-direction">
+                <h3>Blowing Direction</h3>
+                <p>{{customer.blowing_direction}}</p>
+            </div>
+        </div>
+    </div>
+
+</main>
 
 {% endblock body %}
