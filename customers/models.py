@@ -5,6 +5,7 @@ from django.conf import settings
 class Customer(models.Model):
 
     BLOWING_DIRECTION_CHOICES = [
+        ("", "Direction"),
         ("N", "North"),
         ("S", "South"),
         ("E", "East"),
@@ -19,7 +20,7 @@ class Customer(models.Model):
     address = models.CharField(null=True, blank=True, max_length=250)
     zip_code = models.IntegerField(null=True, blank=True)
     blowing_direction = models.CharField(
-        max_length=3, choices=BLOWING_DIRECTION_CHOICES
+        blank=True, max_length=3, choices=BLOWING_DIRECTION_CHOICES
     )
     notes = models.TextField(null=True, blank=True)
 

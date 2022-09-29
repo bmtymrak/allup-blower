@@ -2,15 +2,51 @@
 
 {% block body %}
 
+<div class="form-customer-add">
+    <form method="POST">
+        <!-- <div class="customer-list-grid"> -->
+        {% csrf_token %}
+        {{form.non_field_errors}}
+
+        {{form.first_name.errors}}
+        {{form.first_name}}
+
+        {{form.last_name.errors}}
+        {{form.last_name}}
+
+        {{form.address.errors}}
+        {{form.address}}
+
+        {{form.zip_code.errors}}
+        {{form.zip_code}}
+
+        {{form.blowing_direction.errors}}
+        {{form.blowing_direction}}
+        
+        {{form.notes.errors}}
+        {{form.notes}}
+
+        {{formset.management_form}}
+        {% for form in formset %}
+            {{form.as_p}}
+        {% endfor %}
+    <!-- </div> -->
+        <button type="Submit">Add</button>
+    </form>
+</div>
+
+<div class="customer-list-grid">
 {% for customer in customers %}
-    <p>{{customer.first_name}}</p>
-
+    <div>{{customer.first_name}}</div>
+    <div>{{customer.last_name}}</div>
+    <div>{{customer.address}}</div>
+    <div>{{customer.zip_code}}</div>
+    <div>{{customer.blowing_direction}}</div>
+    <div>{{customer.warning}}</div>
+    <div>{{customer.notes}}</div>
 {% endfor %}
+</div>
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p }}
-    <button type="Submit">Add</button>
-</form>
+
 
 {% endblock body %}
