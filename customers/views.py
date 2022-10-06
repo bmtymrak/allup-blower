@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -48,3 +48,10 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
     model = Customer
     context_object_name = "customer"
     template_name = "customers/detail.html"
+
+
+class CustomerDeleteView(LoginRequiredMixin, DeleteView):
+    model = Customer
+    success_url = reverse_lazy("home")
+    context_object_name = "customer"
+    template_name = "customers/delete.html"
