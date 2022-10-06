@@ -119,6 +119,7 @@ a {
     border-radius: 3px;
     border: 1px solid rgba(49, 52, 66, 1);
     height: 35px;
+    /* font-size: 2rem; */
 }
 
 .button-login {
@@ -133,6 +134,8 @@ a {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 1fr 2fr 2fr 2fr;
 }
+
+.customer-add-form {}
 
 .customer-detail {
     display: flex;

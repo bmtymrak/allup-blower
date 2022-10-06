@@ -16,9 +16,9 @@
             </div>
             <div class="customer-info-hazards">
                 <h3>Hazards</h3>
-                <div class="">Hazard 1</div>
-                <div class="">Hazard 2</div>
-                <div class="">Hazard 3</div>
+                {% for hazard in customer.hazard_set.all %}
+                <div class="">{{hazard.content}}</div>
+                    {% endfor %}
             </div>
             <div class="customer-info-direction">
                 <h3>Blowing Direction</h3>

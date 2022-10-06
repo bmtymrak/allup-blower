@@ -4,33 +4,45 @@
 
 <div class="form-customer-add">
     <form method="POST">
-        <!-- <div class="customer-list-grid"> -->
+        <div class="customer-add-form">
         {% csrf_token %}
         {{form.non_field_errors}}
 
         {{form.first_name.errors}}
-        {{form.first_name}}
+        <div class="form-field">
+            {{form.first_name}}
+        </div>
 
         {{form.last_name.errors}}
-        {{form.last_name}}
+        <div class="form-field">
+            {{form.last_name}}
+        </div>
 
         {{form.address.errors}}
-        {{form.address}}
+        <div class="form-field">
+            {{form.address}}
+        </div>
 
         {{form.zip_code.errors}}
-        {{form.zip_code}}
-
-        {{form.blowing_direction.errors}}
-        {{form.blowing_direction}}
+        <div class="form-field">
+            {{form.zip_code}}
         
+        </div>
+        {{form.blowing_direction.errors}}
+        <div class="form-field">
+            {{form.blowing_direction}}
+        </div>
+
         {{form.notes.errors}}
-        {{form.notes}}
+        <div class="form-field">
+            {{form.notes}}
+        </div>
 
         {{formset.management_form}}
         {% for form in formset %}
             {{form.as_p}}
         {% endfor %}
-    <!-- </div> -->
+    </div>
         <button type="Submit">Add</button>
     </form>
 </div>
@@ -43,7 +55,7 @@
     <div>{{customer.zip_code}}</div>
     <div>{{customer.blowing_direction}}</div>
     <div>{{customer.warning}}</div>
-    <div>{{customer.notes}}</div>
+    <div>{{customer.notes|linebreaks}}</div>
 {% endfor %}
 </div>
 
