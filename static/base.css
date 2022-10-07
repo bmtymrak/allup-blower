@@ -122,6 +122,15 @@ a {
     /* font-size: 2rem; */
 }
 
+.zipcode>input {
+    width: 100px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: row;
+}
+
 .button-login {
     background-color: rgba(49, 52, 66, 1);
     border-radius: 5px;

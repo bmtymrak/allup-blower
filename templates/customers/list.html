@@ -8,26 +8,30 @@
         {% csrf_token %}
         {{form.non_field_errors}}
 
-        {{form.first_name.errors}}
-        <div class="form-field">
-            {{form.first_name}}
+        <div class="form-section">
+            {{form.first_name.errors}}
+            <div class="form-field">
+                {{form.first_name}}
+            </div>
+
+            {{form.last_name.errors}}
+            <div class="form-field">
+                {{form.last_name}}
+            </div>
         </div>
 
-        {{form.last_name.errors}}
-        <div class="form-field">
-            {{form.last_name}}
+        <div class="form-section">
+            {{form.address.errors}}
+            <div class="form-field">
+                {{form.address}}
+            </div>
+
+            {{form.zip_code.errors}}
+            <div class="form-field zipcode">
+                {{form.zip_code}}
+            </div>
         </div>
 
-        {{form.address.errors}}
-        <div class="form-field">
-            {{form.address}}
-        </div>
-
-        {{form.zip_code.errors}}
-        <div class="form-field">
-            {{form.zip_code}}
-        
-        </div>
         {{form.blowing_direction.errors}}
         <div class="form-field">
             {{form.blowing_direction}}
@@ -37,10 +41,14 @@
         <div class="form-field">
             {{form.notes}}
         </div>
-
+ 
+        <div>Hazards</div>
         {{formset.management_form}}
         {% for form in formset %}
-            {{form.as_p}}
+            {{form.content.errors}}
+            <div class="form-field">
+                {{form.content}}
+            </div>
         {% endfor %}
     </div>
         <button type="Submit">Add</button>
