@@ -27,4 +27,6 @@ class Customer(models.Model):
 
 class Hazard(models.Model):
     content = models.CharField(null=True, blank=True, max_length=250)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
+    customer = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, null=False, related_name="hazards"
+    )
