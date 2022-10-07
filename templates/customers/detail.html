@@ -16,7 +16,7 @@
             </div>
             <div class="customer-info-hazards">
                 <h3>Hazards</h3>
-                {% for hazard in customer.hazard_set.all %}
+                {% for hazard in customer.hazards.all %}
                 <div class="">{{hazard.content}}</div>
                     {% endfor %}
             </div>

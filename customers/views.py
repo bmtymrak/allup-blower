@@ -11,8 +11,20 @@ class CustomerListView(LoginRequiredMixin, TemplateView):
     template_name = "customers/list.html"
 
     def post(self, request, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
+        customer_form = CustomerForm(self.request.POST)
+        if customer_form.is_valid():
+            new_customer = customer_form.save(commit=False)
+            hazard_formset = HazardFormset(self.request.POST, instance=new_customer)
+            if hazard_formset.is_valid():
+                print("formset valid")
+                new_customer.save()
+                hazard_formset.save()
+                return HttpResponseRedirect(self.get_success_url())
+
+        kwargs["form"] = customer_form
+        kwargs["formset"] = hazard_formset
+
+        return self.render_to_response(kwargs)
 
     def get_context_data(self, **kwargs):
         customers = Customer.objects.all()
@@ -48,6 +60,63 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
     model = Customer
     context_object_name = "customer"
     template_name = "customers/detail.html"
+
+
+# class CustomerEditView(LoginRequiredMixin, UpdateView):
+#     model = Customer
+#     context_object_name = "customer"
+#     success_url = reverse_lazy("home")
+#     template_name = "customers/edit.html"
+
+
+class CustomerEditView(LoginRequiredMixin, TemplateView):
+    template_name = "customers/edit.html"
+
+    def post(self, request, **kwargs):
+        pk = self.kwargs.get("pk")
+        customer = Customer.objects.filter(pk=pk).get()
+        customer_form = CustomerForm(data=self.request.POST, instance=customer)
+        if customer_form.is_valid():
+            new_customer = customer_form.save(commit=False)
+            hazard_formset = HazardFormset(self.request.POST, instance=customer)
+            if hazard_formset.is_valid():
+                print("formset valid")
+                new_customer.save()
+                hazard_formset.save()
+                return HttpResponseRedirect(self.get_success_url())
+
+        kwargs["form"] = customer_form
+        kwargs["formset"] = hazard_formset
+
+        return self.render_to_response(kwargs)
+
+    def get_context_data(self, **kwargs):
+        pk = self.kwargs.get("pk")
+        customer = Customer.objects.filter(pk=pk).get()
+        kwargs["customers"] = customer
+
+        if self.request.method == "POST":
+            customer_form = CustomerForm(data=self.request.POST, instance=customer)
+            if customer_form.is_valid():
+                new_customer = customer_form.save(commit=False)
+                hazard_formset = HazardFormset(self.request.POST, instance=customer)
+                if hazard_formset.is_valid():
+                    print("formset valid")
+                    new_customer.save()
+                    hazard_formset.save()
+                    return HttpResponseRedirect(self.get_success_url())
+        else:
+            customer_form = CustomerForm(instance=customer)
+            hazard_formset = HazardFormset(instance=customer)
+
+        kwargs["form"] = customer_form
+        kwargs["formset"] = hazard_formset
+
+        return super().get_context_data(**kwargs)
+
+    def get_success_url(self):
+        url = reverse_lazy("home")
+        return url
 
 
 class CustomerDeleteView(LoginRequiredMixin, DeleteView):

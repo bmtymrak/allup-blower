@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% block body %}
+
+<div class="form-customer-add">
+    <form method="POST">
+        <div class="customer-add-form">
+        {% csrf_token %}
+        {{form.non_field_errors}}
+
+        {{form.first_name.errors}}
+        <div class="form-field">
+            {{form.first_name}}
+        </div>
+
+        {{form.last_name.errors}}
+        <div class="form-field">
+            {{form.last_name}}
+        </div>
+
+        {{form.address.errors}}
+        <div class="form-field">
+            {{form.address}}
+        </div>
+
+        {{form.zip_code.errors}}
+        <div class="form-field">
+            {{form.zip_code}}
+        
+        </div>
+        {{form.blowing_direction.errors}}
+        <div class="form-field">
+            {{form.blowing_direction}}
+        </div>
+
+        {{form.notes.errors}}
+        <div class="form-field">
+            {{form.notes}}
+        </div>
+
+        {{formset.management_form}}
+        {% for form in formset %}
+            {{form.as_p}}
+        {% endfor %}
+    </div>
+        <button type="Submit">Add</button>
+    </form>
+</div>
+
+{% endblock body %}
