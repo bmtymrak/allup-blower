@@ -57,9 +57,9 @@
 
 <div class="customer-list-grid">
 {% for customer in customers %}
-    <div>{{customer.first_name}}</div>
-    <div>{{customer.last_name}}</div>
-    <div>{{customer.address}}</div>
+    <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
+    <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
+    <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}}</a></div>
     <div>{{customer.zip_code}}</div>
     <div>{{customer.blowing_direction}}</div>
     <div>{{customer.warning}}</div>
