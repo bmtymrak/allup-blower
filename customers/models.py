@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from project.storages_backends import PrivateMediaStorage
 
 
 class Customer(models.Model):
@@ -23,6 +24,7 @@ class Customer(models.Model):
         blank=True, max_length=3, choices=BLOWING_DIRECTION_CHOICES
     )
     notes = models.TextField(null=True, blank=True)
+    photo = models.ImageField(storage=PrivateMediaStorage, null=True, blank=True)
 
 
 class Hazard(models.Model):
