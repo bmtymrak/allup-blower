@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "storages",
     "accounts",
     "pages",
     "customers",
@@ -162,3 +163,19 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_UNIQUE_EMAIL = True
+
+USE_S3 = env("USE_S3") == "True"
+
+if USE_S3:
+    # aws settings
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    WS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+    AWS_S3_REGION_NAME = (
+        "us-east-2"  # Needed for this to work, but wasn't in the testdriven.io tutorial
+    )
+    # s3 private media settings
+    PRIVATE_MEDIA_LOCATION = "assets"
+    PRIVATE_FILE_STORAGE = "allup.storage_backends.PrivateMediaStorage"
