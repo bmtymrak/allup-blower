@@ -9,7 +9,11 @@
 
     <div class="customer-info-container">
         <div class="customer-info-image">
-            <img src="{{customer.photo.url}}">IMAGE HERE
+            {% if customer.photo %}
+            <img src="{{customer.photo.url}}">
+            {% else %}
+            IMAGE HERE
+            {% endif %}
 
         </div>
         <div class="customer-info-details">
