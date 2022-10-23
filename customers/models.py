@@ -1,6 +1,11 @@
 from django.db import models
 from django.conf import settings
 from project.storages_backends import PrivateMediaStorage
+from django.core.files import File
+
+from pathlib import Path
+from PIL import Image
+from io import BytesIO
 
 
 class Customer(models.Model):
@@ -25,6 +30,22 @@ class Customer(models.Model):
     )
     notes = models.TextField(null=True, blank=True)
     photo = models.ImageField(storage=PrivateMediaStorage(), null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        img = Image.open(self.photo)
+        aspect_ratio = img.width / img.height
+        output_size = (750, int(750 // aspect_ratio))
+        new_image = img.resize(
+            output_size
+        )  # resize returns a new image so need to assign it and use it from here on
+        img_filename = Path(self.photo.file.name).name
+        buffer = BytesIO()
+        new_image.save(buffer, format="JPEG")
+        file_object = File(buffer)
+        self.photo.save(
+            img_filename, file_object, save=False
+        )  # Need save=False to avoid infinite saving loop
+        super().save(*args, **kwargs)
 
 
 class Hazard(models.Model):

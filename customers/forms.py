@@ -25,6 +25,7 @@ class CustomerForm(ModelForm):
             "zip_code",
             "blowing_direction",
             "notes",
+            "photo",
         ]
 
 

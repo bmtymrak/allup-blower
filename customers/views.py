@@ -2,8 +2,8 @@ from django.views.generic import DetailView, TemplateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from customers.forms import CustomerForm, HazardFormset
 
+from customers.forms import CustomerForm, HazardFormset
 from customers.models import Customer
 
 
@@ -11,12 +11,11 @@ class CustomerListView(LoginRequiredMixin, TemplateView):
     template_name = "customers/list.html"
 
     def post(self, request, **kwargs):
-        customer_form = CustomerForm(self.request.POST)
+        customer_form = CustomerForm(self.request.POST, self.request.FILES)
         if customer_form.is_valid():
             new_customer = customer_form.save(commit=False)
             hazard_formset = HazardFormset(self.request.POST, instance=new_customer)
             if hazard_formset.is_valid():
-                print("formset valid")
                 new_customer.save()
                 hazard_formset.save()
                 return HttpResponseRedirect(self.get_success_url())
