@@ -23,13 +23,17 @@
             </div>
             <div class="customer-info-hazards">
                 <h3>Hazards</h3>
-                {% for hazard in customer.hazards.all %}
-                <div class="">{{hazard.content}}</div>
+                <ul>
+                    {% for hazard in customer.hazards.all %}
+                    <li class="">{{hazard.content}}</li>
                     {% endfor %}
+                </ul>
             </div>
             <div class="customer-info-direction">
                 <h3>Blowing Direction</h3>
-                <p>{{customer.blowing_direction}}</p>
+                <p>
+                    <span class="direction-indicator">{{customer.blowing_direction}}</span>
+                </p>
             </div>
         </div>
     </div>

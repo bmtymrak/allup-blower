@@ -156,16 +156,17 @@ a {
     display: flex;
     flex-direction: column;
     align-items: baseline;
-    margin-left: 50px;
+    margin: -25px 0 20px 50px;
 }
 
 .customer-title-address {
-    font-size: 3rem;
+    font-size: 40px;
     /* margin-right: 20px; */
 }
 
 .customer-title-name {
     font-weight: 400;
+    font-size: 20px;
 }
 
 .customer-info-container {
@@ -178,4 +179,33 @@ a {
 .customer-info-details {
     display: flex;
     flex-direction: column;
+}
+
+.customer-info-details>div {
+    margin-bottom: 20px;
+}
+
+.customer-info-details>div>h3 {
+    background-color: black;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 0 10px 0 10px;
+
+}
+
+.direction-indicator {
+    font-size: 64px;
+    font-weight: 600;
+    text-align: center;
+    margin: auto;
+}
+
+.customer-info-details>div>p {
+    font-size: 28px;
+}
+
+.customer-info-hazards>ul>li {
+    font-size: 28px;
 }
