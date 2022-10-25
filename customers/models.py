@@ -47,6 +47,9 @@ class Customer(models.Model):
         )  # Need save=False to avoid infinite saving loop
         super().save(*args, **kwargs)
 
+    def __str__(self):
+        return f"{self.address}"
+
 
 class Hazard(models.Model):
     content = models.CharField(null=True, blank=True, max_length=250)
