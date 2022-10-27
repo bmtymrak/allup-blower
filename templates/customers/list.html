@@ -8,69 +8,77 @@
             {% csrf_token %}
             {{form.non_field_errors}}
 
-            <div class="form-section">
-                {{form.first_name.errors}}
+            <div class="customer-form-address">
+                <div class="form-section">
+                    {{form.first_name.errors}}
+                    <div class="form-field">
+                        {{form.first_name}}
+                    </div>
+
+                    {{form.last_name.errors}}
+                    <div class="form-field">
+                        {{form.last_name}}
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    {{form.address.errors}}
+                    <div class="form-field">
+                        {{form.address}}
+                    </div>
+
+                    {{form.zip_code.errors}}
+                    <div class="form-field zipcode">
+                        {{form.zip_code}}
+                    </div>
+                </div>
+                {{form.photo.errors}}
                 <div class="form-field">
-                    {{form.first_name}}
+                    {{form.photo}}
                 </div>
+        
+            </div>
 
-                {{form.last_name.errors}}
+            <div class="customer-form-details">
+                {{form.blowing_direction.errors}}
                 <div class="form-field">
-                    {{form.last_name}}
+                    {{form.blowing_direction}}
                 </div>
-            </div>
 
-            <div class="form-section">
-                {{form.address.errors}}
+                {{form.notes.errors}}
                 <div class="form-field">
-                    {{form.address}}
-                </div>
-
-                {{form.zip_code.errors}}
-                <div class="form-field zipcode">
-                    {{form.zip_code}}
+                    {{form.notes}}
                 </div>
             </div>
-
-            {{form.blowing_direction.errors}}
-            <div class="form-field">
-                {{form.blowing_direction}}
+            <div>
+                <div>Hazards</div>
+                {{formset.management_form}}
+                {% for form in formset %}
+                    {{form.content.errors}}
+                    <div class="form-field">
+                        {{form.content}}
+                    </div>
+                {% endfor %}
             </div>
-
-            {{form.notes.errors}}
-            <div class="form-field">
-                {{form.notes}}
-            </div>
-            {{form.photo.errors}}
-            <div class="form-field">
-                {{form.photo}}
-            </div>
-    
-            <div>Hazards</div>
-            {{formset.management_form}}
-            {% for form in formset %}
-                {{form.content.errors}}
-                <div class="form-field">
-                    {{form.content}}
-                </div>
-            {% endfor %}
-
             
         </div>
         <button type="Submit">Add</button>
     </form>
 </div>
 
-<div class="customer-list-grid">
-{% for customer in customers %}
-    <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
-    <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
-    <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}}</a></div>
-    <div>{{customer.zip_code}}</div>
-    <div>{{customer.blowing_direction}}</div>
-    <div>{{customer.warning}}</div>
-    <div>{{customer.notes|linebreaks}}</div>
-{% endfor %}
+<div class="customer-list-container">
+    <div class="customer-list-grid">
+    {% for customer in customers %}
+        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
+        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
+        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}}</a></div>
+        <div>{{customer.zip_code}}</div>
+        <div>{{customer.blowing_direction}}</div>
+        <div>{% for hazard in customer.hazards.all %} {{hazard.content}}, {% endfor %}</div>
+        <div><p>{{customer.notes|linebreaks}}</p></div>
+        <div></div>
+    {% endfor %}
+    </div>
 </div>
 
 

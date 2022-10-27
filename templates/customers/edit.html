@@ -3,7 +3,7 @@
 {% block body %}
 
 <div class="form-customer-add">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <div class="customer-add-form">
         {% csrf_token %}
         {{form.non_field_errors}}
@@ -42,6 +42,11 @@
         {% for form in formset %}
             {{form.as_p}}
         {% endfor %}
+
+        {{form.photo.errors}}
+        <div class="form-field">
+            {{form.photo}}
+        </div>
     </div>
         <button type="Submit">Add</button>
     </form>
