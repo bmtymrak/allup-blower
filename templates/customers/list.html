@@ -75,7 +75,8 @@
         <div>{{customer.zip_code}}</div>
         <div>{{customer.blowing_direction}}</div>
         <div>{% for hazard in customer.hazards.all %} {{hazard.content}}, {% endfor %}</div>
-        <div><p>{{customer.notes|linebreaks}}</p></div>
+        <div>{{customer.notes|linebreaks}}</div>
+        <div><a href='{% url "customer_edit" pk=customer.pk %}'>Edit</a></div>
         <div></div>
     {% endfor %}
     </div>

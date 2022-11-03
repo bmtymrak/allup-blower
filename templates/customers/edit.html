@@ -5,49 +5,63 @@
 <div class="form-customer-add">
     <form method="POST" enctype="multipart/form-data">
         <div class="customer-add-form">
-        {% csrf_token %}
-        {{form.non_field_errors}}
+            {% csrf_token %}
+            {{form.non_field_errors}}
 
-        {{form.first_name.errors}}
-        <div class="form-field">
-            {{form.first_name}}
-        </div>
+            <div class="customer-form-address">
+                <div class="form-section">
+                    {{form.first_name.errors}}
+                    <div class="form-field">
+                        {{form.first_name}}
+                    </div>
 
-        {{form.last_name.errors}}
-        <div class="form-field">
-            {{form.last_name}}
-        </div>
+                    {{form.last_name.errors}}
+                    <div class="form-field">
+                        {{form.last_name}}
+                    </div>
+                </div>
 
-        {{form.address.errors}}
-        <div class="form-field">
-            {{form.address}}
-        </div>
+                <div class="form-section">
+                    {{form.address.errors}}
+                    <div class="form-field">
+                        {{form.address}}
+                    </div>
 
-        {{form.zip_code.errors}}
-        <div class="form-field">
-            {{form.zip_code}}
+                    {{form.zip_code.errors}}
+                    <div class="form-field zipcode">
+                        {{form.zip_code}}
+                    </div>
+                </div>
+                {{form.photo.errors}}
+                <div class="form-field">
+                    {{form.photo}}
+                </div>
         
-        </div>
-        {{form.blowing_direction.errors}}
-        <div class="form-field">
-            {{form.blowing_direction}}
-        </div>
+            </div>
 
-        {{form.notes.errors}}
-        <div class="form-field">
-            {{form.notes}}
-        </div>
+            <div class="customer-form-details">
+                {{form.blowing_direction.errors}}
+                <div class="form-field">
+                    {{form.blowing_direction}}
+                </div>
 
-        {{formset.management_form}}
-        {% for form in formset %}
-            {{form.as_p}}
-        {% endfor %}
-
-        {{form.photo.errors}}
-        <div class="form-field">
-            {{form.photo}}
+                {{form.notes.errors}}
+                <div class="form-field">
+                    {{form.notes}}
+                </div>
+            </div>
+            <div>
+                <div>Hazards</div>
+                {{formset.management_form}}
+                {% for form in formset %}
+                    {{form.content.errors}}
+                    <div class="form-field">
+                        {{form.content}}
+                    </div>
+                {% endfor %}
+            </div>
+            
         </div>
-    </div>
         <button type="Submit">Add</button>
     </form>
 </div>
