@@ -1,8 +1,9 @@
-from django.forms import ModelForm, inlineformset_factory
+# from django.forms import ModelForm, Form, inlineformset_factory, FileField
+from django import forms
 from customers.models import Customer, Hazard
 
 
-class CustomerForm(ModelForm):
+class CustomerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs.update(
@@ -29,6 +30,10 @@ class CustomerForm(ModelForm):
         ]
 
 
-HazardFormset = inlineformset_factory(
+HazardFormset = forms.inlineformset_factory(
     Customer, Hazard, fields=["content"], can_delete=False
 )
+
+
+class CsvUpdateForm(forms.Form):
+    csv_file = forms.FileField()

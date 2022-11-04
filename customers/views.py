@@ -1,10 +1,13 @@
-from django.views.generic import DetailView, TemplateView, DeleteView
+from django.views.generic import DetailView, TemplateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from customers.forms import CustomerForm, HazardFormset
+from customers.forms import CustomerForm, HazardFormset, CsvUpdateForm
 from customers.models import Customer
+
+from io import StringIO
+import csv
 
 
 class CustomerListView(LoginRequiredMixin, TemplateView):
@@ -123,3 +126,36 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("home")
     context_object_name = "customer"
     template_name = "customers/delete.html"
+
+
+class UploadCustomersView(LoginRequiredMixin, FormView):
+    form_class = CsvUpdateForm
+    template_name = "customers/upload.html"
+    success_url = reverse_lazy("home")
+
+    def form_valid(self, form):
+        file = form.cleaned_data["csv_file"]
+        file_data = file.read().decode("utf-8")
+        csv_data = csv.reader(StringIO(file_data), delimiter=",")
+
+        Customer.objects.update(order=None)
+
+        for i, row in enumerate(csv_data):
+            if i == 0:
+                headers = row
+            else:
+                customer_data_dict = {}
+                for i, header in enumerate(headers):
+                    customer_data_dict[header] = row[i]
+
+                customer = Customer.objects.get(
+                    address=customer_data_dict["address"],
+                    zip_code=customer_data_dict["zip_code"],
+                )
+
+                customer.order = customer_data_dict["order"]
+                customer.save()
+
+                print(customer)
+
+        return HttpResponseRedirect(self.get_success_url())

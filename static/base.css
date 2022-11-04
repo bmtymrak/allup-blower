@@ -147,7 +147,7 @@ a {
 
 .customer-list-grid {
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 1fr 1fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr 1fr 2fr 2fr 1fr;
     width: 85%;
     grid-row-gap: 10px;
     align-items: center;
@@ -173,13 +173,13 @@ a {
     background: black;
 } */
 
-.customer-list-grid>div:nth-child(9n + 9) {
-    grid-column: 1/9;
+.customer-list-grid>div:nth-child(10n + 10) {
+    grid-column: 1/10;
     border-top: 1px solid black;
 }
 
 .customer-list-grid>div:last-child {
-    grid-column: 1/9;
+    grid-column: 1/10;
     border-top: none;
 }
 

@@ -69,6 +69,7 @@
 <div class="customer-list-container">
     <div class="customer-list-grid">
     {% for customer in customers %}
+        <div>{{customer.order}}</div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}}</a></div>
