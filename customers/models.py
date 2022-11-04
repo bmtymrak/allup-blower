@@ -30,6 +30,7 @@ class Customer(models.Model):
     )
     notes = models.TextField(blank=True)
     photo = models.ImageField(storage=PrivateMediaStorage(), null=True, blank=True)
+    order = models.IntegerField(null=True, blank=True, unique=True)
 
     def save(self, *args, **kwargs):
         if self.photo:
