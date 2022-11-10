@@ -63,6 +63,22 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "customer"
     template_name = "customers/detail.html"
 
+    def get_context_data(self, **kwargs):
+        try:
+            next_customer = Customer.objects.get(order=self.object.order + 1)
+        except:
+            next_customer = 0
+
+        try:
+            prev_customer = Customer.objects.get(order=self.object.order - 1)
+        except:
+            prev_customer = 0
+
+        kwargs["next_customer"] = next_customer
+        kwargs["prev_customer"] = prev_customer
+
+        return super().get_context_data(**kwargs)
+
 
 # class CustomerEditView(LoginRequiredMixin, UpdateView):
 #     model = Customer
@@ -74,10 +90,13 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
 class CustomerEditView(LoginRequiredMixin, TemplateView):
     template_name = "customers/edit.html"
 
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         pk = self.kwargs.get("pk")
         customer = Customer.objects.filter(pk=pk).get()
-        customer_form = CustomerForm(data=self.request.POST, instance=customer)
+        print(customer)
+        customer_form = CustomerForm(
+            data=self.request.POST, files=self.request.FILES, instance=customer
+        )
         if customer_form.is_valid():
             new_customer = customer_form.save(commit=False)
             hazard_formset = HazardFormset(self.request.POST, instance=customer)
@@ -95,21 +114,21 @@ class CustomerEditView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get("pk")
         customer = Customer.objects.filter(pk=pk).get()
-        kwargs["customers"] = customer
+        # kwargs["customers"] = customer
 
-        if self.request.method == "POST":
-            customer_form = CustomerForm(data=self.request.POST, instance=customer)
-            if customer_form.is_valid():
-                new_customer = customer_form.save(commit=False)
-                hazard_formset = HazardFormset(self.request.POST, instance=customer)
-                if hazard_formset.is_valid():
-                    print("formset valid")
-                    new_customer.save()
-                    hazard_formset.save()
-                    return HttpResponseRedirect(self.get_success_url())
-        else:
-            customer_form = CustomerForm(instance=customer)
-            hazard_formset = HazardFormset(instance=customer)
+        # if self.request.method == "POST":
+        #     customer_form = CustomerForm(data=self.request.POST, instance=customer)
+        #     if customer_form.is_valid():
+        #         new_customer = customer_form.save(commit=False)
+        #         hazard_formset = HazardFormset(self.request.POST, instance=customer)
+        #         if hazard_formset.is_valid():
+        #             print("formset valid")
+        #             new_customer.save()
+        #             hazard_formset.save()
+        #             return HttpResponseRedirect(self.get_success_url())
+        # else:
+        customer_form = CustomerForm(instance=customer)
+        hazard_formset = HazardFormset(instance=customer)
 
         kwargs["form"] = customer_form
         kwargs["formset"] = hazard_formset

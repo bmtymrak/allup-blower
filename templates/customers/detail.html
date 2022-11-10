@@ -3,14 +3,31 @@
 {% block body %}
 <main class="customer-detail">
     <div class="customer-title-container">
-        <h1 class="customer-title-address">{{customer.address}}</h1>
-        <h2 class="customer-title-name">{{customer.first_name}} {{customer.last_name}}</h2>
+        <div class="customer-title">
+            <h1 class="customer-title-address">{{customer.address}}</h1>
+            <h2 class="customer-title-name">{{customer.first_name}} {{customer.last_name}}</h2>
+        </div>
+       
+        <div class="customer-detail-nav">
+            <div>
+                {% if prev_customer %}
+                <a href="{% url 'customer_detail' pk=prev_customer.order %}"><<</a>
+                {% endif %}
+            </div>
+            <div>
+                {% if next_customer %}
+                <a href="{% url 'customer_detail' pk=next_customer.order %}">>></a>
+                {% endif %}
+            </div>
+        </div>
     </div>
+
+    
 
     <div class="customer-info-container">
         <div class="customer-info-image">
             {% if customer.photo %}
-            <img src="{{customer.photo.url}}">
+            <img class="customer-image" src="{{customer.photo.url}}">
             {% else %}
             IMAGE HERE
             {% endif %}

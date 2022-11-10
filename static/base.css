@@ -224,9 +224,9 @@ a {
 
 .customer-title-container {
     display: flex;
-    flex-direction: column;
-    align-items: baseline;
+    justify-content: space-between;
     margin: -25px 0 20px 50px;
+    width: 75%;
 }
 
 .customer-title-address {
@@ -237,6 +237,16 @@ a {
 .customer-title-name {
     font-weight: 400;
     font-size: 20px;
+}
+
+.customer-detail-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.customer-detail-nav>div>a {
+    font-size: 50px;
 }
 
 .customer-info-container {
@@ -313,4 +323,8 @@ a {
     /* border: 2px solid rgba(49, 52, 66, 1); */
     color: white;
 
+}
+
+.customer-image {
+    height: 475px;
 }
