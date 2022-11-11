@@ -11,12 +11,12 @@
         <div class="customer-detail-nav">
             <div>
                 {% if prev_customer %}
-                <a href="{% url 'customer_detail' pk=prev_customer.order %}"><<</a>
+                <a href="{% url 'customer_detail' pk=prev_customer.pk %}"><<</a>
                 {% endif %}
             </div>
             <div>
                 {% if next_customer %}
-                <a href="{% url 'customer_detail' pk=next_customer.order %}">>></a>
+                <a href="{% url 'customer_detail' pk=next_customer.pk %}">>></a>
                 {% endif %}
             </div>
         </div>
