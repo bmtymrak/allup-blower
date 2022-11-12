@@ -226,7 +226,10 @@ a {
     display: flex;
     justify-content: space-between;
     margin: -25px 0 20px 50px;
-    width: 75%;
+}
+
+.customer-title {
+    margin-right: auto;
 }
 
 .customer-title-address {
@@ -244,6 +247,7 @@ a {
     justify-content: space-between;
     align-items: center;
     width: 500px;
+    margin-right: 30px;
 }
 
 .customer-detail-nav>div>a {
