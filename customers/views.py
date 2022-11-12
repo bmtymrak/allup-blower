@@ -29,8 +29,11 @@ class CustomerListView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(kwargs)
 
     def get_context_data(self, **kwargs):
-        customers = Customer.objects.all()
-        kwargs["customers"] = customers
+        customers_with_order = Customer.objects.exclude(order=None).order_by("order")
+        customers_without_order = Customer.objects.filter(order=None).order_by(
+            "address"
+        )
+        kwargs["customers"] = list(customers_with_order) + list(customers_without_order)
 
         new_customer = Customer()
 
