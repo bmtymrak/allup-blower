@@ -272,6 +272,7 @@ a {
 
 .customer-info-details>div {
     margin-bottom: 20px;
+    max-width: 500px;
 }
 
 .customer-info-details>div>h3 {
