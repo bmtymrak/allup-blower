@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
+    # "debug_toolbar",
     "django_extensions",
     "allauth",
     "allauth.account",
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "customers",
 ]
 
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -69,8 +70,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+if DEBUG == True:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append(
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    )
+
 
 ROOT_URLCONF = "project.urls"
 
