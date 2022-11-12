@@ -54,6 +54,10 @@
                 <div>Hazards</div>
                 {{formset.management_form}}
                 {% for form in formset %}
+                    {% for hidden in form.hidden_fields %}
+                        {{hidden}}
+                    {% endfor %}
+                {{form.errors}}
                     {{form.content.errors}}
                     <div class="form-field">
                         {{form.content}}

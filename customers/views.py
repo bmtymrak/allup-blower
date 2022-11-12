@@ -43,7 +43,6 @@ class CustomerListView(LoginRequiredMixin, TemplateView):
                 new_customer = customer_form.save(commit=False)
                 hazard_formset = HazardFormset(self.request.POST, instance=new_customer)
                 if hazard_formset.is_valid():
-                    print("formset valid")
                     new_customer.save()
                     hazard_formset.save()
                     return HttpResponseRedirect(self.get_success_url())
@@ -67,27 +66,23 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
     template_name = "customers/detail.html"
 
     def get_context_data(self, **kwargs):
-        try:
-            next_customer = Customer.objects.get(order=self.object.order + 1)
-        except:
-            next_customer = 0
 
-        try:
-            prev_customer = Customer.objects.get(order=self.object.order - 1)
-        except:
-            prev_customer = 0
+        prev_customer = (
+            Customer.objects.filter(order__lt=self.object.order)
+            .order_by("order")
+            .last()
+        )
+
+        next_customer = (
+            Customer.objects.filter(order__gt=self.object.order)
+            .order_by("order")
+            .first()
+        )
 
         kwargs["next_customer"] = next_customer
         kwargs["prev_customer"] = prev_customer
 
         return super().get_context_data(**kwargs)
-
-
-# class CustomerEditView(LoginRequiredMixin, UpdateView):
-#     model = Customer
-#     context_object_name = "customer"
-#     success_url = reverse_lazy("home")
-#     template_name = "customers/edit.html"
 
 
 class CustomerEditView(LoginRequiredMixin, TemplateView):
@@ -96,7 +91,6 @@ class CustomerEditView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         pk = self.kwargs.get("pk")
         customer = Customer.objects.filter(pk=pk).get()
-        print(customer)
         customer_form = CustomerForm(
             data=self.request.POST, files=self.request.FILES, instance=customer
         )
@@ -104,9 +98,11 @@ class CustomerEditView(LoginRequiredMixin, TemplateView):
             new_customer = customer_form.save(commit=False)
             hazard_formset = HazardFormset(self.request.POST, instance=customer)
             if hazard_formset.is_valid():
-                print("formset valid")
                 new_customer.save()
-                hazard_formset.save()
+                hazards_saved = hazard_formset.save()
+                for hazard in hazards_saved:
+                    if hazard.content == "":
+                        hazard.delete()
                 return HttpResponseRedirect(self.get_success_url())
 
         kwargs["form"] = customer_form
@@ -117,19 +113,6 @@ class CustomerEditView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get("pk")
         customer = Customer.objects.filter(pk=pk).get()
-        # kwargs["customers"] = customer
-
-        # if self.request.method == "POST":
-        #     customer_form = CustomerForm(data=self.request.POST, instance=customer)
-        #     if customer_form.is_valid():
-        #         new_customer = customer_form.save(commit=False)
-        #         hazard_formset = HazardFormset(self.request.POST, instance=customer)
-        #         if hazard_formset.is_valid():
-        #             print("formset valid")
-        #             new_customer.save()
-        #             hazard_formset.save()
-        #             return HttpResponseRedirect(self.get_success_url())
-        # else:
         customer_form = CustomerForm(instance=customer)
         hazard_formset = HazardFormset(instance=customer)
 

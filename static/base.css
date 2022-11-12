@@ -242,11 +242,20 @@ a {
 .customer-detail-nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 500px;
 }
 
 .customer-detail-nav>div>a {
     font-size: 50px;
+}
+
+.customer-detail-nav-text {
+    font-size: 25px;
+}
+
+.customer-detail-order {
+    font-size: 40px;
 }
 
 .customer-info-container {
