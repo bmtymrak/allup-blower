@@ -67,17 +67,21 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
 
-        prev_customer = (
-            Customer.objects.filter(order__lt=self.object.order)
-            .order_by("order")
-            .last()
-        )
+        if self.object.order:
+            prev_customer = (
+                Customer.objects.filter(order__lt=self.object.order)
+                .order_by("order")
+                .last()
+            )
 
-        next_customer = (
-            Customer.objects.filter(order__gt=self.object.order)
-            .order_by("order")
-            .first()
-        )
+            next_customer = (
+                Customer.objects.filter(order__gt=self.object.order)
+                .order_by("order")
+                .first()
+            )
+        else:
+            prev_customer = None
+            next_customer = None
 
         kwargs["next_customer"] = next_customer
         kwargs["prev_customer"] = prev_customer
