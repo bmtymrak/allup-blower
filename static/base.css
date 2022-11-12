@@ -311,11 +311,14 @@ a {
 }
 
 .upload-wrapper {
+    display: flex;
+    flex-direction: row;
     width: 85%;
 }
 
 .upload-link-container {
     width: 100px;
+    margin-right: 20px;
 }
 
 .upload-button {

@@ -5,6 +5,7 @@ from customers.views import (
     CustomerDeleteView,
     CustomerEditView,
     UploadCustomersView,
+    export_customers,
 )
 
 urlpatterns = [
@@ -12,5 +13,6 @@ urlpatterns = [
     path("<int:pk>/edit", CustomerEditView.as_view(), name="customer_edit"),
     path("<int:pk>/", CustomerDetailView.as_view(), name="customer_detail"),
     path("upload/", UploadCustomersView.as_view(), name="upload_customers"),
+    path("export/", export_customers, name="export_customers"),
     path("", CustomerListView.as_view(), name="home"),
 ]

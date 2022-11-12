@@ -1,6 +1,7 @@
 from django.views.generic import DetailView, TemplateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
 
 from customers.forms import CustomerForm, HazardFormset, CsvUpdateForm
@@ -162,9 +163,52 @@ class UploadCustomersView(LoginRequiredMixin, FormView):
                     zip_code=customer_data_dict["zip_code"],
                 )
 
-                customer.order = customer_data_dict["order"]
+                if customer_data_dict["order"]:
+                    customer.order = customer_data_dict["order"]
+                else:
+                    customer.order = None
+
                 customer.save()
 
-                print(customer)
-
         return HttpResponseRedirect(self.get_success_url())
+
+
+@login_required
+def export_customers(request):
+
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="customer_export'},
+    )
+
+    writer = csv.writer(response)
+
+    customers = Customer.objects.all()
+
+    writer.writerow(
+        [
+            "first_name",
+            "last_name",
+            "driver",
+            "address",
+            "zip_code",
+            "blowing_direction",
+            "notes",
+            "order",
+        ]
+    )
+    for customer in customers:
+        writer.writerow(
+            [
+                customer.first_name,
+                customer.last_name,
+                "",
+                customer.address,
+                customer.zip_code,
+                customer.blowing_direction,
+                customer.notes,
+                customer.order,
+            ]
+        )
+
+    return response

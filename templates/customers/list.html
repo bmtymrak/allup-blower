@@ -66,14 +66,16 @@
     </form>
 </div>
 
-
-<div class="upload-container">
-    <div class="upload-wrapper">
-        <div class="upload-link-container">
-            <a href="{% url 'upload_customers' %}"><div class="upload-button">Upload</div></a>
+    <div class="upload-container">
+        <div class="upload-wrapper">
+            <div class="upload-link-container">
+                <a href="{% url 'upload_customers' %}"><div class="upload-button">Upload</div></a>
+            </div>
+            <div class="upload-link-container">
+                <a href="{% url 'export_customers' %}"><div class="upload-button">Export</div></a>
+            </div>
         </div>
     </div>
-</div>
 
 <div class="customer-list-container">
     <div class="customer-list-grid">
