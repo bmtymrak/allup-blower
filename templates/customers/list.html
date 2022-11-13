@@ -79,16 +79,26 @@
 
 <div class="customer-list-container">
     <div class="customer-list-grid">
+        <div><span class="grid-column-heading">Order</span></div>
+        <div><span class="grid-column-heading">First Name</span></div>
+        <div><span class="grid-column-heading">Last Name</span></div>
+        <div><span class="grid-column-heading">Address</span></div>
+        <div><span class="grid-column-heading">Zipcode</span></div>
+        <div class="cell-justify-center"><span class="grid-column-heading">Blowing Direction</span></div>
+        <div class="cell-justify-center"><span class="grid-column-heading">Notes</span></div>
+        <div class="cell-justify-center"><span class="grid-column-heading">Hazards</span></div>
+        <div class="cell-justify-center"><span class="grid-column-heading">Edit</span></div>
+        <div></div>
     {% for customer in customers %}
-        <div>{{customer.order}}</div>
+        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.order}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}}</a></div>
         <div>{{customer.zip_code}}</div>
-        <div>{{customer.blowing_direction}}</div>
+        <div class="cell-justify-center">{{customer.blowing_direction}}</div>
         <div>{% for hazard in customer.hazards.all %} {{hazard.content}}, {% endfor %}</div>
         <div>{{customer.notes|linebreaks}}</div>
-        <div><a href='{% url "customer_edit" pk=customer.pk %}'>Edit</a></div>
+        <div class="cell-justify-center"><a href='{% url "customer_edit" pk=customer.pk %}'>Edit</a></div>
         <div></div>
     {% endfor %}
     </div>

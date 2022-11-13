@@ -11,7 +11,7 @@
         <div class="customer-detail-nav">
             <div>
                 {% if prev_customer %}
-                <a href="{% url 'customer_detail' pk=prev_customer.pk %}"><< <span class="customer-detail-nav-text">Previous</span></a>
+                <a href="{% url 'customer_detail' pk=prev_customer.pk %}">< <span class="customer-detail-nav-text">Previous</span></a>
                 {% endif %}
             </div>
             <div>
@@ -21,7 +21,11 @@
             </div>
             <div>
                 {% if next_customer %}
-                <a href="{% url 'customer_detail' pk=next_customer.pk %}"><span class="customer-detail-nav-text">Next</span> >></a>
+                <a href="{% url 'customer_detail' pk=next_customer.pk %}">
+                    <div>
+                        <span class="customer-detail-nav-text">Next</span> <span>></span>
+                    </div>
+                </a>
                 {% endif %}
             </div>
         </div>
@@ -53,9 +57,9 @@
             </div>
             <div class="customer-info-direction">
                 <h3>Blowing Direction</h3>
-                <p>
+                <div class="direction-indicator-container">
                     <span class="direction-indicator">{{customer.blowing_direction}}</span>
-                </p>
+                </div>
             </div>
         </div>
     </div>

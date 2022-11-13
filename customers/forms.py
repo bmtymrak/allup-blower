@@ -7,10 +7,11 @@ class CustomerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs.update(
-            placeholder="First Name", size="12"
+            placeholder="First Name", size="8"
         )
-        self.fields["last_name"].widget.attrs.update(placeholder="Last Name", size="12")
+        self.fields["last_name"].widget.attrs.update(placeholder="Last Name", size="8")
         self.fields["address"].widget.attrs["placeholder"] = "Address"
+        self.fields["address"].widget.attrs["size"] = "15"
         self.fields["zip_code"].widget.attrs.update(placeholder="Zipcode")
         self.fields["blowing_direction"].widget.attrs["placeholder"] = "Direction"
         self.fields["notes"].widget.attrs.update(
