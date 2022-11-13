@@ -183,7 +183,7 @@ def export_customers(request):
 
     writer = csv.writer(response)
 
-    customers = Customer.objects.all()
+    customers = Customer.objects.all().order_by("order")
 
     writer.writerow(
         [
