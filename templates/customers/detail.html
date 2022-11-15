@@ -43,10 +43,6 @@
 
         </div>
         <div class="customer-info-details">
-            <div class="customer-info-notes">
-                <h3>Notes</h3>
-                {{customer.notes|linebreaks}}
-            </div>
             <div class="customer-info-hazards">
                 <h3>Hazards</h3>
                 <ul>
@@ -54,6 +50,10 @@
                     <li class="">{{hazard.content}}</li>
                     {% endfor %}
                 </ul>
+            </div>
+            <div class="customer-info-notes">
+                <h3>Notes</h3>
+                {{customer.notes|linebreaks}}
             </div>
             <div class="customer-info-direction">
                 <h3>Blowing Direction</h3>

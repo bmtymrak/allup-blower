@@ -197,6 +197,9 @@ a {
     font-weight: bold;
 }
 
+.list-photo-icon {
+    display: inline-block;
+}
 
 .form-container {
     display: flex;

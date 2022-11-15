@@ -1,4 +1,5 @@
 {% extends "_base.html" %}
+{% load static %}
 
 {% block body %}
 
@@ -93,7 +94,7 @@
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.order}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
-        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}}</a></div>
+        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}} {% if customer.photo %} <img class="list-photo-icon" src="{% static 'images/photo.svg' %}" width="20px">{% endif %}</a></div>
         <div>{{customer.zip_code}}</div>
         <div class="cell-justify-center">{{customer.blowing_direction}}</div>
         <div>{% for hazard in customer.hazards.all %} {{hazard.content}}, {% endfor %}</div>
