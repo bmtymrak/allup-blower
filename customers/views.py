@@ -149,7 +149,7 @@ class UploadCustomersView(LoginRequiredMixin, FormView):
         csv_data = csv.reader(StringIO(file_data), delimiter=",")
 
         Customer.objects.update(order=None)
-
+        customers = []
         for i, row in enumerate(csv_data):
             if i == 0:
                 headers = row
@@ -158,18 +158,34 @@ class UploadCustomersView(LoginRequiredMixin, FormView):
                 for i, header in enumerate(headers):
                     customer_data_dict[header] = row[i]
 
-                customer = Customer.objects.get(
+                customer, created = Customer.objects.get_or_create(
                     address=customer_data_dict["address"],
                     zip_code=customer_data_dict["zip_code"],
                 )
+
+                if created:
+                    if customer_data_dict["first_name"]:
+                        customer.first_name = customer_data_dict["first_name"]
+                    if customer_data_dict["last_name"]:
+                        customer.last_name = customer_data_dict["last_name"]
+                    if customer_data_dict["blowing_direction"]:
+                        customer.blowing_direction = customer_data_dict[
+                            "blowing_direction"
+                        ]
+                    if customer_data_dict["notes"]:
+                        customer.notes = customer_data_dict["notes"]
 
                 if customer_data_dict["order"]:
                     customer.order = customer_data_dict["order"]
                 else:
                     customer.order = None
 
-                customer.save()
+                customers.append(customer)
 
+        Customer.objects.bulk_update(
+            customers,
+            ["first_name", "last_name", "blowing_direction", "notes", "order"],
+        )
         return HttpResponseRedirect(self.get_success_url())
 
 
