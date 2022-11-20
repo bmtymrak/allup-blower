@@ -2,10 +2,19 @@
 
 {% block body %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Delete {{customer.first_name}} {{customer.last_name}}</button>
-</form>
+<div class="delete-container">
+    <div class="delete-item">
+        <h2>Confirm deleting customer</h2>
+        <p>{{customer.first_name}} {{customer.last_name}}</p>
+        <p>{{customer.address}}</p>
+    </div>
+
+    <form class="delete-item" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p>(This cannot be undone)</p>
+        <button class="delete-button" type="submit">Delete</button>
+    </form>
+</div>
 
 {% endblock body %}
