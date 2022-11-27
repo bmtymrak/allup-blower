@@ -139,6 +139,12 @@ a {
     flex-direction: row;
 }
 
+.form-button-container {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
 .button-login {
     background-color: rgba(49, 52, 66, 1);
     border-radius: 5px;
@@ -208,6 +214,14 @@ a {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+.form-add-container {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .form-customer-add {
@@ -329,10 +343,16 @@ a {
     font-size: 28px;
 }
 
-.upload-container {
+.action-container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+.action-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
 }
 
 .upload-wrapper {

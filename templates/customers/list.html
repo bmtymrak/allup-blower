@@ -3,79 +3,88 @@
 
 {% block body %}
 
-<div class="form-container">
-    <form class="form-customer-add" method="POST" enctype="multipart/form-data">
-        <div class="customer-add-form">
-            {% csrf_token %}
-            {{form.non_field_errors}}
-
-            <div class="customer-form-address">
-                <div class="form-section">
-                    {{form.first_name.errors}}
-                    <div class="form-field">
-                        {{form.first_name}}
-                    </div>
-
-                    {{form.last_name.errors}}
-                    <div class="form-field">
-                        {{form.last_name}}
-                    </div>
+    <div class="action-container">
+        <div class="action-wrapper">
+            <div class="upload-wrapper">
+                <div class="upload-link-container">
+                    <a href="{% url 'upload_customers' %}"><div class="upload-button">Upload</div></a>
                 </div>
-
-                <div class="form-section">
-                    {{form.address.errors}}
-                    <div class="form-field">
-                        {{form.address}}
-                    </div>
-
-                    {{form.zip_code.errors}}
-                    <div class="form-field zipcode">
-                        {{form.zip_code}}
-                    </div>
-                </div>
-                {{form.photo.errors}}
-                <div class="form-field">
-                    {{form.photo}}
-                </div>
-        
-            </div>
-
-            <div class="customer-form-details">
-                {{form.blowing_direction.errors}}
-                <div class="form-field">
-                    {{form.blowing_direction}}
-                </div>
-
-                {{form.notes.errors}}
-                <div class="form-field">
-                    {{form.notes}}
+                <div class="upload-link-container">
+                    <a href="{% url 'export_customers' %}"><div class="upload-button">Export</div></a>
                 </div>
             </div>
             <div>
-                <div>Hazards</div>
-                {{formset.management_form}}
-                {% for form in formset %}
-                    {{form.content.errors}}
-                    <div class="form-field">
-                        {{form.content}}
-                    </div>
-                {% endfor %}
+                <div class="upload-link-container">
+                    <div class="upload-button add-customer">+ Add</div>
+                </div>
             </div>
-            
         </div>
-        <button type="Submit">Add</button>
-    </form>
-</div>
+    </div>
 
-    <div class="upload-container">
-        <div class="upload-wrapper">
-            <div class="upload-link-container">
-                <a href="{% url 'upload_customers' %}"><div class="upload-button">Upload</div></a>
+    <div class="form-add-container">
+        <form class="form-customer-add" method="POST" enctype="multipart/form-data">
+            <div class="customer-add-form">
+                {% csrf_token %}
+                {{form.non_field_errors}}
+    
+                <div class="customer-form-address">
+                    <div class="form-section">
+                        {{form.first_name.errors}}
+                        <div class="form-field">
+                            {{form.first_name}}
+                        </div>
+    
+                        {{form.last_name.errors}}
+                        <div class="form-field">
+                            {{form.last_name}}
+                        </div>
+                    </div>
+    
+                    <div class="form-section">
+                        {{form.address.errors}}
+                        <div class="form-field">
+                            {{form.address}}
+                        </div>
+    
+                        {{form.zip_code.errors}}
+                        <div class="form-field zipcode">
+                            {{form.zip_code}}
+                        </div>
+                    </div>
+                    {{form.photo.errors}}
+                    <div class="form-field">
+                        {{form.photo}}
+                    </div>
+            
+                </div>
+    
+                <div class="customer-form-details">
+                    {{form.blowing_direction.errors}}
+                    <div class="form-field">
+                        {{form.blowing_direction}}
+                    </div>
+    
+                    {{form.notes.errors}}
+                    <div class="form-field">
+                        {{form.notes}}
+                    </div>
+                </div>
+                <div>
+                    <div>Hazards</div>
+                    {{formset.management_form}}
+                    {% for form in formset %}
+                        {{form.content.errors}}
+                        <div class="form-field">
+                            {{form.content}}
+                        </div>
+                    {% endfor %}
+                </div>
+                
             </div>
-            <div class="upload-link-container">
-                <a href="{% url 'export_customers' %}"><div class="upload-button">Export</div></a>
+            <div class="form-button-container">
+                <button type="Submit">Add</button>
             </div>
-        </div>
+        </form>
     </div>
 
 <div class="customer-list-container">
@@ -107,6 +116,15 @@
     </div>
 </div>
 
+<script>
+    const addButton = document.querySelector(".add-customer")
+
+    function showForm(){
+        const formContainer = document.querySelector(".form-add-container")
+        formContainer.style.display = formContainer.style.display == "flex" ? "none" : "flex"
+    }
+    addButton.addEventListener("click", showForm)
+</script>
 
 
 {% endblock body %}
