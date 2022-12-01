@@ -4,7 +4,7 @@
 <main class="customer-detail">
     <div class="customer-title-container">
         <div class="customer-title">
-            <h1 class="customer-title-address">{{customer.address}}</h1>
+            <a href="http://maps.apple.com/?daddr={{customer.address}}+{{customer.zip_code}}"><h1 class="customer-title-address">{{customer.address}}</h1></a>
             <h2 class="customer-title-name">{{customer.first_name}} {{customer.last_name}}</h2>
         </div>
        
