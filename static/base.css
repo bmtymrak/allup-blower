@@ -98,6 +98,15 @@ a {
     margin-left: 20px;
 }
 
+@media (max-width: 400px) {
+
+    .header-nav-links>a {
+        font-size: 1rem;
+
+    }
+}
+
+
 .login--card {
     display: flex;
     flex-direction: column;
@@ -116,17 +125,47 @@ a {
 .form-field {
     margin-bottom: 10px;
     margin-right: 10px;
+    max-width: 100%;
 }
 
 .form-field>input {
     border-radius: 3px;
-    border: 1px solid rgba(49, 52, 66, 1);
+    border: 1px solid black;
     height: 35px;
     /* font-size: 2rem; */
 }
 
+.form-field>input[type="text"] {
+    max-width: 100%;
+}
+
+.form-field>textarea {
+    border-radius: 3px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.form-field>select {
+    border-radius: 3px;
+    border: 1px solid black;
+    background: white;
+}
+
 .form-field>input[type="file"] {
     border: None;
+    max-width: 100%;
+}
+
+.form-add-button {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 3px;
+    color: black;
+}
+
+.form-add-button:hover {
+    background-color: rgba(49, 52, 66, 1);
+    color: white;
 }
 
 
@@ -137,6 +176,19 @@ a {
 .form-section {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.customer-form-address {
+    max-width: 100%;
+}
+
+.customer-form-details {
+    flex-grow: 2;
+}
+
+.customer-form-hazards {
+    max-width: 100%;
 }
 
 .form-button-container {
@@ -209,6 +261,10 @@ a {
     display: inline-block;
 }
 
+.list-nav-icon {
+    min-width: 17px;
+}
+
 .form-container {
     display: flex;
     justify-content: center;
@@ -224,9 +280,18 @@ a {
     margin-top: 20px;
 }
 
+.form-edit-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .form-customer-add {
     width: 85%;
-    border: 1px solid black;
+    border: 2px solid black;
+    border-radius: 10px;
     padding: 20px 20px 20px 20px;
 }
 
@@ -240,6 +305,7 @@ a {
 
 .customer-add-form {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 
 }
@@ -351,6 +417,7 @@ a {
 
 .action-wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 85%;
 }
@@ -358,7 +425,7 @@ a {
 .upload-wrapper {
     display: flex;
     flex-direction: row;
-    width: 85%;
+    margin-bottom: 10px;
 }
 
 .upload-link-container {

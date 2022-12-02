@@ -69,7 +69,7 @@
                         {{form.notes}}
                     </div>
                 </div>
-                <div>
+                <div class="customer-form-hazards">
                     <div>Hazards</div>
                     {{formset.management_form}}
                     {% for form in formset %}
@@ -82,7 +82,7 @@
                 
             </div>
             <div class="form-button-container">
-                <button type="Submit">Add</button>
+                <button class="form-add-button" type="Submit">Add</button>
             </div>
         </form>
     </div>
@@ -109,8 +109,8 @@
         <div class="cell-justify-center">{{customer.blowing_direction}}</div>
         <div>{% for hazard in customer.hazards.all %} {{hazard.content}}, {% endfor %}</div>
         <div>{{customer.notes|linebreaks}}</div>
-        <div class="cell-justify-center"><a href='{% url "customer_edit" pk=customer.pk %}'><img class="" src="{% static 'images/edit-pencil.svg' %}" width="17px"></a></div>
-        <div class="cell-justify-center"><a href='{% url "customer_delete" pk=customer.pk %}'><img class="" src="{% static 'images/trash.svg' %}" width="17px"></a></div>
+        <div class="cell-justify-center"><a href='{% url "customer_edit" pk=customer.pk %}'><img class="list-nav-icon" src="{% static 'images/edit-pencil.svg' %}" width="17px"></a></div>
+        <div class="cell-justify-center"><a href='{% url "customer_delete" pk=customer.pk %}'><img class="list-nav-icon" src="{% static 'images/trash.svg' %}" width="17px"></a></div>
         <div></div>
     {% endfor %}
     </div>
