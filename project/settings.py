@@ -193,3 +193,10 @@ if USE_S3:
     # s3 private media settings
     PRIVATE_MEDIA_LOCATION = "assets"
     PRIVATE_FILE_STORAGE = "allup.storage_backends.PrivateMediaStorage"
+
+if env("ENVIRONMENT") == "production":
+    X_FRAME_OPTIONS = "DENY"
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_REFERRER_POLICY = "same-origin"
