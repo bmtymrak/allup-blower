@@ -29,12 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "bmtymrak.pythonanywhere.com",
-    "allupsnow.pythonanywhere.com",
-]
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
 INTERNAL_IPS = [
     "127.0.0.1",
