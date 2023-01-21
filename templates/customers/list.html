@@ -118,12 +118,17 @@
 
 <script>
     const addButton = document.querySelector(".add-customer")
+    const formContainer = document.querySelector(".form-add-container")
+
+    formContainer.style.display = document.querySelector(".errorlist") ? "flex" : "none"
 
     function showForm(){
-        const formContainer = document.querySelector(".form-add-container")
         formContainer.style.display = formContainer.style.display == "flex" ? "none" : "flex"
     }
     addButton.addEventListener("click", showForm)
+
+    
+
 </script>
 
 

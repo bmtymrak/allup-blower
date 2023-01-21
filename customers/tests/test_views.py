@@ -108,6 +108,24 @@ class TestListView(TestCase):
         )
         self.assertRedirects(response, "/")
 
+    def test_errors_on_post_with_invalid_data(self):
+        self.client.login(username="testuser1", password="testpass123")
+
+        data = {
+            "first_name": "post",
+            "last_name": "test",
+            "address": "",
+            "zip_code": 54321,
+            "blowing_direction": "S",
+            "notes": "test post customer",
+            "hazards-TOTAL_FORMS": 0,
+            "hazards-INITIAL_FORMS": 3,
+        }
+
+        response = self.client.post("/", data)
+
+        self.assertEqual(response.status_code, 200)
+
 
 class TestCustomerDetailView(TestCase):
     @classmethod

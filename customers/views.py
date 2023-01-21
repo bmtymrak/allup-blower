@@ -14,8 +14,20 @@ import csv
 class CustomerListView(LoginRequiredMixin, TemplateView):
     template_name = "customers/list.html"
 
-    def post(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
+        new_customer = Customer()
+        customer_form = CustomerForm()
+        hazard_formset = HazardFormset(instance=new_customer)
+
+        context = self.get_context_data(**kwargs)
+        context["form"] = customer_form
+        context["formset"] = hazard_formset
+
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
         customer_form = CustomerForm(self.request.POST, self.request.FILES)
+        new_customer = Customer()
         if customer_form.is_valid():
             new_customer = customer_form.save(commit=False)
             hazard_formset = HazardFormset(self.request.POST, instance=new_customer)
@@ -24,10 +36,13 @@ class CustomerListView(LoginRequiredMixin, TemplateView):
                 hazard_formset.save()
                 return HttpResponseRedirect(self.get_success_url())
 
-        kwargs["form"] = customer_form
-        kwargs["formset"] = hazard_formset
+        hazard_formset = HazardFormset(self.request.POST, instance=new_customer)
 
-        return self.render_to_response(kwargs)
+        context = self.get_context_data(**kwargs)
+        context["form"] = customer_form
+        context["formset"] = hazard_formset
+
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         customers_with_order = Customer.objects.exclude(order=None).order_by("order")
@@ -35,24 +50,6 @@ class CustomerListView(LoginRequiredMixin, TemplateView):
             "address"
         )
         kwargs["customers"] = list(customers_with_order) + list(customers_without_order)
-
-        new_customer = Customer()
-
-        if self.request.method == "POST":
-            customer_form = CustomerForm(self.request.POST)
-            if customer_form.is_valid():
-                new_customer = customer_form.save(commit=False)
-                hazard_formset = HazardFormset(self.request.POST, instance=new_customer)
-                if hazard_formset.is_valid():
-                    new_customer.save()
-                    hazard_formset.save()
-                    return HttpResponseRedirect(self.get_success_url())
-        else:
-            customer_form = CustomerForm()
-            hazard_formset = HazardFormset(instance=new_customer)
-
-        kwargs["form"] = customer_form
-        kwargs["formset"] = hazard_formset
 
         return super().get_context_data(**kwargs)
 
