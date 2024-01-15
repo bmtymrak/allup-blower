@@ -14,9 +14,7 @@
 
       {% if request.user.is_superuser %}
       <div class="upload-link-container">
-        <a href="{% url 'upload_customers' %}">
-          <div class="button-base">Upload</div>
-        </a>
+        <a hx-get="{% url 'upload_customers' %}" hx-target="#modal-content"><div class="button-base">Upload</div></a>
       </div>
       <div class="upload-link-container">
         <a href="{% url 'export_customers' %}">
@@ -28,11 +26,6 @@
         </button>
       </div>
       {% endif %}
-    </div>
-    <div>
-      <div class="upload-link-container">
-        <div class="button-base add-customer">+ Add</div>
-      </div>
     </div>
   </div>
 </div>

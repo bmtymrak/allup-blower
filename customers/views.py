@@ -518,11 +518,19 @@ def export_customers(request):
             "zip_code",
             "blowing_direction",
             "notes",
+            "route",
             "order",
-            "picture",
         ]
     )
     for customer in customers:
+        
+        if customer.memberships.exists():
+            route = customer.memberships.first().route
+            order = customer.memberships.first().order
+        else:
+            route=""
+            order=""
+
         writer.writerow(
             [
                 customer.first_name,
@@ -532,8 +540,8 @@ def export_customers(request):
                 customer.zip_code,
                 customer.blowing_direction,
                 customer.notes,
-                customer.order,
-                customer.photo,
+                route,
+                order,
             ]
         )
 
