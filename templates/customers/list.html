@@ -3,19 +3,21 @@
 
 {% block body %}
 
+<h1>Customers</h1>
+
     <div class="action-container">
         <div class="action-wrapper">
             <div class="upload-wrapper">
                 <div class="upload-link-container">
-                    <a href="{% url 'upload_customers' %}"><div class="upload-button">Upload</div></a>
+                    <a hx-get="{% url 'upload_customers' %}" hx-target="#modal-content"><div class="button-base">Upload</div></a>
                 </div>
                 <div class="upload-link-container">
-                    <a href="{% url 'export_customers' %}"><div class="upload-button">Export</div></a>
+                    <a href="{% url 'export_customers' %}"><div class="button-base">Export</div></a>
                 </div>
             </div>
             <div>
                 <div class="upload-link-container">
-                    <div class="upload-button add-customer">+ Add</div>
+                    <div class="button-base add-customer">+ Add</div>
                 </div>
             </div>
         </div>
@@ -89,7 +91,7 @@
 
 <div class="customer-list-container">
     <div class="customer-list-grid">
-        <div><span class="grid-column-heading">Order</span></div>
+        <div><span class="grid-column-heading">Route</span></div>
         <div><span class="grid-column-heading">First Name</span></div>
         <div><span class="grid-column-heading">Last Name</span></div>
         <div><span class="grid-column-heading">Address</span></div>
@@ -101,7 +103,7 @@
         <div class="cell-justify-center"><span class="grid-column-heading"></span></div>
         <div></div>
     {% for customer in customers %}
-        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.order}}</a></div>
+        <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.memberships.first.route}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.first_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.last_name}}</a></div>
         <div><a href='{% url "customer_detail" pk=customer.pk %}'>{{customer.address}} {% if customer.photo %} <img class="list-photo-icon" src="{% static 'images/photo.svg' %}" width="20px">{% endif %}</a></div>
@@ -110,7 +112,9 @@
         <div>{% for hazard in customer.hazards.all %} {{hazard.content}}, {% endfor %}</div>
         <div>{{customer.notes|linebreaks}}</div>
         <div class="cell-justify-center"><a href='{% url "customer_edit" pk=customer.pk %}'><img class="list-nav-icon" src="{% static 'images/edit-pencil.svg' %}" width="17px"></a></div>
-        <div class="cell-justify-center"><a href='{% url "customer_delete" pk=customer.pk %}'><img class="list-nav-icon" src="{% static 'images/trash.svg' %}" width="17px"></a></div>
+
+        <button class="button-blank cell-justify-center" hx-get='{% url "customer_delete" pk=customer.id %}' hx-target="#modal-content"><img class="list-nav-icon" src="{% static 'images/trash.svg' %}" width="17px"></button>
+
         <div></div>
     {% endfor %}
     </div>

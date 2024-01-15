@@ -1,0 +1,61 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block body%}
+<h1>Routes</h1>
+
+<div class="route-list">
+    <div class="heading-grid">
+        <div></div>
+        <h2 class="grid-justify-center">My Routes</h2>
+        {% if request.user.is_superuser %}
+        <button class="button-base button-create width-125 grid-justify-right" hx-get='{% url "route_create" %}' hx-target="#modal-content">
+            New Route
+        </button>
+        {% endif %}
+    </div>
+    {% for route in user_routes %}
+    <div class="route-list-item">
+        <div class="route-info-items-container">
+            <div class="route-info-item"><p><span class="bold">{{route.name}}:</span> {{route.type}}</p></div>
+            <div class="route-info-item"><p><span class="bold">Operator:</span> {{route.operator}}</p></div>
+            <div class="route-items-buttons">
+                <div class="route-info-item"><a class="button-base width-75" href="{% url 'route_details' route_id=route.id %}">Details</a></div>
+
+                <button class="route-info-item button-base width-75" hx-get='{% url "route_edit" route_id=route.id  %}' hx-target="#modal-content">
+                Edit
+                </button>
+
+            </div>
+        </div>
+        <form method="post" action="{% url "session_create" route_id=route.id %}">
+            {% csrf_token %}
+            <button class="button-base button-start width-125" type=Submit>Start Route</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="route-list">
+    <h2>Other Routes</h2>
+    {% for route in routes %}
+    <div class="route-list-item">
+        <div class="route-info-items-container">
+            <div class="route-info-item"><p><span class="bold">{{route.name}}:</span> {{route.type}}</p></div>
+            <div class="route-info-item"><p><span class="bold">Operator:</span> {{route.operator}}</p></div>
+                <div class="route-items-buttons">
+                <div class="route-info-item"><a class="button-base width-75" href="{% url 'route_details' route_id=route.id %}">Details</a></div>
+                <button class="route-info-item button-base width-75" hx-get='{% url "route_edit" route_id=route.id  %}' hx-target="#modal-content">
+                    Edit
+                    </button>
+            </div>
+        </div>
+        <form method="post" action="{% url "session_create" route_id=route.id %}">
+            {% csrf_token %}
+            <button class="button-base button-start width-125" type=Submit>Start Route</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock body%}

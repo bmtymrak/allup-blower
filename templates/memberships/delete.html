@@ -4,12 +4,12 @@
 
 <div class="delete-container">
     <div class="delete-item">
-        <h2>Confirm deleting customer</h2>
+        <h2>Confirm deleting customer from route</h2>
         <p>{{customer.first_name}} {{customer.last_name}}</p>
         <p>{{customer.address}}</p>
     </div>
 
-    <form class="delete-item" method="POST">
+    <form class="delete-item" method="POST" action='{% url "membership_delete"%}?next={{next}}'>
         {% csrf_token %}
         {{form.as_p}}
         <p>(This cannot be undone)</p>

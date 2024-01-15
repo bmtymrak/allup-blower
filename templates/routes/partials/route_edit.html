@@ -1,0 +1,16 @@
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-flex form-field">
+        {{field.errors}}
+        {{field.label_tag}}
+        {{field}}
+    </div>
+    {% endfor %}
+    <button hx-post={% if route.id %}
+                        '{% url "route_edit" route_id=route.id %}' 
+                    {% else %}
+                        '{% url "route_create" %}'
+                    {% endif %}
+                    type="Submit">Save</button>
+</form>

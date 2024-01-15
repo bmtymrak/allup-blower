@@ -1,0 +1,131 @@
+{% extends "_base.html" %} {% load static %} {% block body %}
+
+<h1>{{route.name}}</h1>
+<p>Type: {{route.type}} - Operator: {{route.operator}}</p>
+<div class="action-container">
+  <div class="action-wrapper">
+    <div class="upload-wrapper">
+      <div class="upload-link-container">
+        <form method="post" action="{% url "session_create" route_id=route.id %}">
+          {% csrf_token %}
+          <button class="button-base button-start width-125" type=Submit>Start Route</button>
+        </form>
+      </div>
+
+      {% if request.user.is_superuser %}
+      <div class="upload-link-container">
+        <a href="{% url 'upload_customers' %}">
+          <div class="button-base">Upload</div>
+        </a>
+      </div>
+      <div class="upload-link-container">
+        <a href="{% url 'export_customers' %}">
+          <div class="button-base">Export</div>
+        </a>
+      </div>
+      <div class="upload-link-container">
+        <button class="button-base delete-button" hx-get='{% url 'route_delete' route_id=route.id %}' hx-target="#modal-content">Delete
+        </button>
+      </div>
+      {% endif %}
+    </div>
+    <div>
+      <div class="upload-link-container">
+        <div class="button-base add-customer">+ Add</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="customer-list-container">
+  <div class="customer-list-grid">
+    <div><span class="grid-column-heading">Order</span></div>
+    <div><span class="grid-column-heading">First Name</span></div>
+    <div><span class="grid-column-heading">Last Name</span></div>
+    <div><span class="grid-column-heading">Address</span></div>
+    <div><span class="grid-column-heading">Zipcode</span></div>
+    <div class="cell-justify-center">
+      <span class="grid-column-heading">Blowing Direction</span>
+    </div>
+    <div class="cell-justify-center">
+      <span class="grid-column-heading">Hazards</span>
+    </div>
+    <div class="cell-justify-center">
+      <span class="grid-column-heading">Notes</span>
+    </div>
+    <div class="cell-justify-center">
+      <span class="grid-column-heading"></span>
+    </div>
+    <div class="cell-justify-center">
+      <span class="grid-column-heading"></span>
+    </div>
+    <div></div>
+    {% for membership in memberships %}
+    <div>
+      <a href='{% url "customer_detail" pk=membership.customer.pk %}'
+        >{{membership.order}}</a
+      >
+    </div>
+    <div>
+      <a href='{% url "customer_detail" pk=membership.customer.pk %}'
+        >{{membership.customer.first_name}}</a
+      >
+    </div>
+    <div>
+      <a href='{% url "customer_detail" pk=membership.customer.pk %}'
+        >{{membership.customer.last_name}}</a
+      >
+    </div>
+    <div>
+      <a href='{% url "customer_detail" pk=membership.customer.pk %}'
+        >{{membership.customer.address}} {% if membership.customer.photo %}
+        <img
+          class="list-photo-icon"
+          src="{% static 'images/photo.svg' %}"
+          width="20px"
+        />{% endif %}</a
+      >
+    </div>
+    <div>{{membership.customer.zip_code}}</div>
+    <div class="cell-justify-center">
+      {{membership.customer.blowing_direction}}
+    </div>
+    <div>
+      {% for hazard in membership.customer.hazards.all %} {{hazard.content}},
+      {% endfor %}
+    </div>
+    <div>{{membership.customer.notes|linebreaks}}</div>
+    <div class="cell-justify-center">
+      <a href='{% url "customer_edit" pk=membership.customer.pk %}'
+        ><img
+          class="list-nav-icon"
+          src="{% static 'images/edit-pencil.svg' %}"
+          width="17px"
+      /></a>
+    </div>
+    {% if request.user.is_superuser %}
+    <button class="button-blank cell-justify-center" hx-get='{% url "membership_delete" pk=membership.id %}' hx-target="#modal-content"><img class="list-nav-icon" src="{% static 'images/trash.svg' %}" width="17px"></button>
+    {% else %}
+    <div></div>
+    {% endif %}
+    <div></div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  const addButton = document.querySelector(".add-customer");
+  const formContainer = document.querySelector(".form-add-container");
+
+  formContainer.style.display = document.querySelector(".errorlist")
+    ? "flex"
+    : "none";
+
+  function showForm() {
+    formContainer.style.display =
+      formContainer.style.display == "flex" ? "none" : "flex";
+  }
+  addButton.addEventListener("click", showForm);
+</script>
+
+{% endblock body %}

@@ -1,0 +1,13 @@
+<div class="form-container">
+    <p>Select .csv file to upload</p>
+    <form class="form-customer-upload" method="POST" enctype="multipart/form-data" action='{% url "upload_customers" %}'>
+        {% csrf_token %}
+        <div class="form-section">
+            {{form.csv_file.errors}}
+            <div class="form-field">
+                {{form.csv_file}}
+            </div>
+        </div>
+        <button type='submit'>Upload</button>
+    </form>
+</div>

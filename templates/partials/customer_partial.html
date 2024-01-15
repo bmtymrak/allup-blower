@@ -1,0 +1,64 @@
+<main class="customer-detail">
+    <div class="customer-title-container">
+        <div class="customer-title">
+            <a href="http://maps.apple.com/?daddr={{customer.address}}+{{customer.zip_code}}"><h1 class="customer-title-address">{{customer.address}}</h1></a>
+            <h2 class="customer-title-name">{{customer.first_name}} {{customer.last_name}}</h2>
+        </div>
+       
+        <div class="customer-detail-nav">
+            <div>
+                {% if prev_membership %}
+                <a href="{% url 'session' route_id=route_id session_id=session.id membership_id=prev_membership.pk %}">< <span class="customer-detail-nav-text">Previous</span></a>
+                {% endif %}
+            </div>
+            <div>
+                {% if customer.order %}
+                   <span class="customer-detail-order">{{customer.order}}</span>
+                {% endif %}
+            </div>
+            <div>
+                {% if next_membership %}
+                <a href="{% url 'session' route_id=route_id session_id=session.id membership_id=next_membership.id %}">
+                    <div>
+                        <span class="customer-detail-nav-text">Next</span> <span>></span>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="customer-info-container">
+        <div class="customer-info-image">
+            {% if customer.photo %}
+            <img class="customer-image" src="{{customer.photo.url}}">
+            {% else %}
+            IMAGE HERE
+            {% endif %}
+
+        </div>
+        <div class="customer-info-details">
+            <div class="customer-info-hazards">
+                <h3>Hazards</h3>
+                <ul>
+                    {% for hazard in customer.hazards.all %}
+                    <li class="">{{hazard.content}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="customer-info-notes">
+                <h3>Notes</h3>
+                {{customer.notes|linebreaks}}
+            </div>
+            <div class="customer-info-direction">
+                <h3>Blowing Direction</h3>
+                <div class="direction-indicator-container">
+                    <span class="direction-indicator">{{customer.blowing_direction}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

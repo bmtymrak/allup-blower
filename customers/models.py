@@ -58,3 +58,88 @@ class Hazard(models.Model):
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, null=False, related_name="hazards"
     )
+
+
+class RouteType(models.Model):
+    route_type = models.CharField(blank=False, max_length=250)
+
+    def __str__(self):
+        return f"{self.route_type}"
+
+
+class Route(models.Model):
+    name = models.CharField(blank=True, max_length=250)
+    operator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="routes",
+    )
+    type = models.ForeignKey(
+        RouteType,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=False,
+        related_name="routes",
+    )
+    details = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Membership(models.Model):
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        null=False,
+        related_name="memberships",
+    )
+    route = models.ForeignKey(
+        Route,
+        on_delete=models.CASCADE,
+        related_name="memberships",
+    )
+    order = models.IntegerField(null=True, blank=True)
+    notes = models.TextField(
+        blank=True,
+    )
+
+    def __str__(self) -> str:
+        return f"{self.route.name} - {self.customer.address}"
+
+    class Meta:
+        ordering = ["order"]
+
+
+class Session(models.Model):
+    route = models.ForeignKey(
+        Route,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=False,
+        related_name="sessions",
+    )
+    operator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=False,
+        related_name="sessions",
+    )
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(null=True)
+    current_membership = models.ForeignKey(
+        Membership, on_delete=models.SET_NULL, null=True, related_name="sessions"
+    )
+
+    def __str__(self):
+        return f"{self.route}-{self.start_time}"
+
+class SessionVisit(models.Model):
+    session = models.ForeignKey(Session, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    route = models.ForeignKey(Route, on_delete=models.SET_NULL, null=True)
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(null=True)

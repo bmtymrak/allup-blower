@@ -13,20 +13,83 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="{% static 'js/1.9.6_dist_htmx.min.js' %}" ></script>
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% if user.is_authenticated %}
     <header class="header-nav">
+        <img class="header-logo" src="{% static 'images/AllUP_Logo_Tagline_Color_100x500.png' %}" height="50">
+        <div class="header-nav-links">
+            <a href="{% url 'routes'%}">Routes</a>
+        </div>
+
+        {% if request.user.is_superuser %}
+        <div class="header-nav-links">
+            <a href="{% url 'sessions_list'%}">Sessions</a>
+        </div>
+
+        <div class="header-nav-links">
+            <a href="{% url 'customers'%}">Customers</a>
+        </div>
+        {% endif %}
+
         <div class="header-nav-links">
             <a href="{% url 'account_logout'%}">Logout</a>
         </div>
-        <img class="header-logo" src="{% static 'images/AllUP_Logo_Tagline_Color_100x500.png' %}" height="50">
-        <div class="header-nav-links">
-            <a href="{% url 'home'%}">Home</a>
-        </div>
+        
     </header>
     {% endif %}
+    <main id="main" class="main-container">
     {% block body %}
     {% endblock body %}
+    </main>
+
+    <div class="overlay hidden">
+        <div id="modal" class="modal hidden">
+            <div id="modal-content">
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    const modal = document.querySelector("#modal")
+    const overlay = document.querySelector(".overlay")
+
+    function showModal(){
+        modal.classList.remove("hidden")
+        overlay.classList.remove("hidden")
+    }
+
+    function closeModal(){
+        modal.classList.add("hidden")
+        overlay.classList.add("hidden")
+    }
+
+    htmx.on("htmx:afterSwap", (e) => {
+        if (e.detail.target.id == "modal-content") {
+          showModal()
+          const dateInput = document.querySelector("#id_form-0-date")
+
+          if (dateInput){
+            dateInput.focus()
+          }
+        }
+      })
+
+    overlay.addEventListener("click", (event) => {
+        const clickedOutside = !event.target.closest(".modal")
+        if (clickedOutside){
+            closeModal()
+        }
+    }
+    )
+
+    window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+
+</script>
 </html>

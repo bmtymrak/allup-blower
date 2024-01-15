@@ -1,28 +1,23 @@
 {% extends "_base.html" %}
 {% load static %}
+
 {% block body %}
 
-<main class="main-container">
-    <div class="login--card">
-        <img src="{% static 'images/AllUP_Logo_Tagline_Color_100x500.png' %}" width="500px">
+<div class="login-card">
+  <img
+    src="{% static 'images/AllUP_Logo_Tagline_Color_100x500.png' %}"
+    width="500px"
+  />
 
-        <form class="form-login" method="POST">
-            {% csrf_token %}
-            {{form.non_field_errors}}
+  <form class="form-login" method="POST">
+    {% csrf_token %} {{form.non_field_errors}}
 
-            <div class="form-field">
-                {{form.login.errors}}
-                {{form.login}}
-            </div>
+    <div class="form-field">{{form.login.errors}} {{form.login}}</div>
 
-            <div class="form-field">
-                {{form.password.errors}}
-                {{form.password}}
-            </div>
+    <div class="form-field">{{form.password.errors}} {{form.password}}</div>
 
-            <button class="button-login" type="submit">Log In</button>
-        </form>
-    </div>
-</main>
+    <button class="button-login" type="submit">Log In</button>
+  </form>
+</div>
 
 {% endblock body %}

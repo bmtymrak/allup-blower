@@ -1,0 +1,37 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load tz %}
+
+{% block body %}
+
+<h1>Sessions</h1>
+
+{% for session in sessions %}
+<div class="session-list-item">
+    <div class="session-info-item">
+        <span class="bold">{{session.route.name}}</span>
+        <span>{{session.route.type}}</span>
+    </div>
+    <div class="session-info-item">
+        <span class="bold">Operator:</span>
+        <span>{{session.operator}}</span>
+    </div>
+    <div class="session-info-item">
+        <span class="bold">Start time:</span>
+        <span>{{session.start_time | timezone:"America/Detroit"}}</span>
+    </div>
+    <div class="session-info-item">
+        <span class="bold">End time:</span>
+        <span>{{session.end_time | timezone:"America/Detroit"}}</span>
+    </div>
+    <div class="session-info-item">
+        <span class="bold">Current customer:</span>
+        <span>{{session.current_membership.customer.address}}</span>
+    </div>
+    <div>{{session.current_membership.order}}/{{session.route_length}}</div>
+</div>
+
+{% endfor %}
+
+
+{% endblock body %}

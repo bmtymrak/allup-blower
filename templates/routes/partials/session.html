@@ -1,0 +1,63 @@
+    <div class="customer-title-container">
+        <div class="customer-title">
+            <a href="http://maps.apple.com/?daddr={{customer.address}}+{{customer.zip_code}}"><h1 class="customer-title-address">{{customer.address}}</h1></a>
+            <h2 class="customer-title-name">{{customer.first_name}} {{customer.last_name}}</h2>
+        </div>
+    </div>
+    <div class="customer-detail-nav">
+        {% if prev_membership %}
+
+            <button hx-post="{% url 'session' route_id=route_id session_id=session.id membership_id=prev_membership.pk %}" hx-target="#main" hx-push-url="true" class="customer-detail-nav-button button-base"> <span class="customer-detail-nav-text">Previous</span></button>
+
+        {% else %}
+            <div class="customer-detail-nav-button button-base not-visible">
+            </div>
+        {% endif %}
+        <div>
+            {% if membership.order %}
+               <span class="customer-detail-order">{{membership.order}}/{{route_length}}</span>
+            {% endif %}
+        </div>
+        {% if next_membership %}
+
+            <button hx-post="{% url 'session' route_id=route_id session_id=session.id membership_id=next_membership.pk %}" hx-target="#main" hx-push-url="true" class="customer-detail-nav-button button-base"> <span class="customer-detail-nav-text">Next</span></button>
+
+        {% else %}
+            <button hx-post="{% url 'complete_session' route_id=route_id session_id=session.id %}"class="customer-detail-nav-button button-base"><span class="customer-detail-nav-text">Complete</span></button>
+        {% endif %}
+    </div>
+
+    
+
+    <div class="customer-info-container">
+        <div class="customer-info-image">
+            {% if customer.photo %}
+            <img class="customer-image" src="{{customer.photo.url}}">
+            {% else %}
+            <div class="customer-image">
+                NO PICTURE
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="customer-info-details">
+            <div class="customer-info-hazards">
+                <h3>Hazards</h3>
+                <ul>
+                    {% for hazard in customer.hazards.all %}
+                    <li class="">{{hazard.content}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="customer-info-notes">
+                <h3>Notes</h3>
+                {{customer.notes|linebreaks}}
+            </div>
+            <div class="customer-info-direction">
+                <h3>Blowing Direction</h3>
+                <div class="direction-indicator-container">
+                    <span class="direction-indicator">{{customer.blowing_direction}}</span>
+                </div>
+            </div>
+        </div>
+    </div>

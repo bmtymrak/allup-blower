@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="login-card">
+  <form class="form-login" method="POST">
+    {% csrf_token %} {{form.non_field_errors}}
+    <p>Are you sure you want to log out?</p>
+    <button class="button-delete" type="submit">Log out</button>
+  </form>
+</div>
+
+{% endblock body %}
