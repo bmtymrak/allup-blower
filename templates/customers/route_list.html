@@ -28,10 +28,15 @@
 
             </div>
         </div>
+        {% if route.memberships.exists %}
         <form method="post" action="{% url "session_create" route_id=route.id %}">
             {% csrf_token %}
             <button class="button-base button-start width-125" type=Submit>Start Route</button>
         </form>
+        {% else %}
+            <button class="button-base">No customers</button>
+        {% endif %}
+
     </div>
     {% endfor %}
 </div>
