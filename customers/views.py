@@ -152,13 +152,6 @@ class CustomerEditView(LoginRequiredMixin, TemplateView):
         return url
 
 
-# class CustomerDeleteView(LoginRequiredMixin, DeleteView):
-#     model = Customer
-#     success_url = reverse_lazy("customers")
-#     context_object_name = "customer"
-#     template_name = "customers/delete.html"
-
-
 @login_required
 @user_passes_test(check_admin)
 def customer_delete(request, pk):
@@ -201,18 +194,6 @@ def membership_delete(request, pk):
     return render(
         request, "customers/partials/membership_delete.html", {"membership": membership}
     )
-
-
-# class MembershipDeleteView(LoginRequiredMixin, DeleteView):
-#     model = Membership
-#     context_object_name = "membership"
-#     template_name = "memberships/delete.html"
-
-#     def get_success_url(self):
-#         if url := self.request.POST.get("next"):
-#             return url
-#         else:
-#             return reverse_lazy("routes_list")
 
 
 class RouteCreateView(LoginRequiredMixin, IsSuperUserMixin, CreateView):

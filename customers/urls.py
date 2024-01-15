@@ -2,7 +2,6 @@ from django.urls import path
 from customers.views import (
     CustomerListView,
     CustomerDetailView,
-    # CustomerDeleteView,
     CustomerEditView,
     UploadCustomersView,
     RouteCreateView,
