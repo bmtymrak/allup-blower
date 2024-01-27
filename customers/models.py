@@ -80,7 +80,7 @@ class Route(models.Model):
         RouteType,
         on_delete=models.SET_NULL,
         null=True,
-        blank=False,
+        blank=True,
         related_name="routes",
     )
     details = models.TextField(blank=True)

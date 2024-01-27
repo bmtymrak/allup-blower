@@ -358,7 +358,7 @@ def session(request, route_id, session_id, membership_id):
         .first()
     )
 
-    new_visit = SessionVisit.objects.create(route=route, session=session, customer=membership.customer)
+    new_visit = SessionVisit.objects.get_or_create(route=route, session=session, customer=membership.customer)
     
     if prev_membership:
         prev_visit = SessionVisit.objects.filter(route=route, session=session, customer=prev_membership.customer).get()
