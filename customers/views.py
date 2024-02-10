@@ -195,13 +195,6 @@ def membership_delete(request, pk):
         request, "customers/partials/membership_delete.html", {"membership": membership}
     )
 
-
-class RouteCreateView(LoginRequiredMixin, IsSuperUserMixin, CreateView):
-    model = Route
-    fields = ["name", "operator", "type", "details"]
-    template_name = "customers/route_create.html"
-    success_url = reverse_lazy("routes")
-
 class RouteListView(LoginRequiredMixin, ListView):
     model = Route
     context_object_name = "routes"
@@ -234,15 +227,6 @@ class RouteDetailView(LoginRequiredMixin, TemplateView):
         kwargs["route"] = route
 
         return super().get_context_data(**kwargs)
-
-
-class RouteEditView(LoginRequiredMixin, UpdateView):
-    model = Route
-    pk_url_kwarg = "route_id"
-    template_name = "customers/route_edit.html"
-    fields = ["name", "operator", "type", "details"]
-    context_object_name = "route"
-    success_url = reverse_lazy("routes")
 
 
 @login_required
@@ -385,23 +369,6 @@ def session(request, route_id, session_id, membership_id):
             "route_length": route_length,
         },
     )
-
-
-@login_required
-def get_customer(request):
-    current_customer = request.GET["membership"]
-    direction = request.GET["direction"]
-
-    if direction == "next":
-        order = current_customer.order + 1
-    else:
-        order = current_customer.order - 1
-
-    next_customer = Membership.objects.filter(route=current_customer.route).get(
-        order=order
-    )
-
-    return
 
 
 class UploadCustomersView(LoginRequiredMixin, IsSuperUserMixin, FormView):

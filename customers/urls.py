@@ -4,8 +4,6 @@ from customers.views import (
     CustomerDetailView,
     CustomerEditView,
     UploadCustomersView,
-    RouteCreateView,
-    RouteEditView,
     RouteListView,
     RouteDetailView,
     SessionsListView,
@@ -32,7 +30,6 @@ urlpatterns = [
     path(
         "routes/<int:route_id>/session/create/", create_session, name="session_create"
     ),
-    # path("routes/create/", RouteCreateView.as_view(), name="routes_create"),
     path("routes/create/", edit_route, name="route_create"),
     path(
         "routes/<int:route_id>/details",
