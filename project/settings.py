@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "django_extensions",
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",
     "storages",
     "accounts",
     "pages",
@@ -65,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
 
